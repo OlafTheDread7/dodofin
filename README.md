@@ -1,8 +1,8 @@
 # DoDoFin
 
-A small personal finance app I built in 2025 to get a handle on my own spending and debt. It runs in the terminal on Python and SQLite: import a bank CSV, categorize what came in, set budgets from what you actually spend, and plan paying off debt with the snowball or avalanche method.
+I built DoDoFin in 2025 to track spending and debt. It's a small personal finance app that runs in the terminal with Python and SQLite. It supports CSV import from a bank export, categorizing transactions, setting a budget from actual spending, and planning debt payoff with the snowball or avalanche method.
 
-This is a clean copy of the 2025 project. It ships with a generator that builds a demo database out of made-up data, so you can try everything without a bank export.
+This is a clean copy of the 2025 project. The included generator builds a demo database out of made-up data, so you can try everything without a bank export.
 
 ## Try it on made-up data
 
@@ -11,14 +11,14 @@ pip install -r requirements.txt
 python make_sample_data.py
 ```
 
-That writes six months of fake bank transactions to `sample/transactions.csv` (rent, bills, groceries, coffee, two paychecks a month, and a few rows with no category) and builds `demo.db` with them plus three fake debts. Then run the app on it:
+This writes six months of fake bank transactions to `sample/transactions.csv`: rent, bills, groceries, coffee, two paychecks a month, and a few rows with no category. It also builds `demo.db` with those transactions and three fake debts. Run the app against that database:
 
 ```bash
 DODOFIN_DB=demo.db python main.py                  # macOS / Linux
 $env:DODOFIN_DB = "demo.db"; python main.py        # Windows PowerShell
 ```
 
-With $700 a month toward the demo debts, the payoff planner shows the avalanche order saving about $105 in interest over the snowball order ($1,656 against $1,761, 26 months either way).
+With $700 a month going toward the demo debts, the payoff planner shows avalanche saving about $105 in interest compared with snowball. That's $1,656 against $1,761, with both taking 26 months.
 
 ## Use it for real
 
@@ -40,9 +40,9 @@ The menu:
 | 7 Manage Debts | Track balances, rates and minimums, and simulate payoff month by month with either strategy. |
 | 8 Debt Affordability | Takes your monthly income, subtracts budgets and minimum payments (without counting a card payment twice), and tells you what's left for paying debt down faster. |
 
-`list_transactions.py` shows recent transactions with their IDs, and `python delete_transactions.py 12 13` removes specific ones after asking.
+`list_transactions.py` shows recent transactions and their IDs. `python delete_transactions.py 12 13` asks before removing specific transactions.
 
-The database is `finance.db` in the current folder unless `DODOFIN_DB` says otherwise. `.gitignore` keeps every `.db` and `.csv` out of git.
+The app uses `finance.db` in the current folder unless you set `DODOFIN_DB` to something else. `.gitignore` keeps every `.db` and `.csv` out of git.
 
 ## Tests
 
@@ -50,12 +50,12 @@ The database is `finance.db` in the current folder unless `DODOFIN_DB` says othe
 python -m unittest discover -s tests -v
 ```
 
-They build the demo database in a temp folder and check the import (every row lands, re-importing adds nothing, dollar-sign amounts parse), the uncategorized count, that the generator is repeatable, that avalanche never costs more interest than snowball, and that the generator refuses to write into a real `finance.db`.
+The tests build the demo database in a temp folder. They check that every imported row lands, importing again adds nothing, and dollar-sign amounts parse. They also check the uncategorized count, that the generator is repeatable, that avalanche never costs more interest than snowball, and that the generator refuses to write into a real `finance.db`.
 
 ## Notes
 
-- Amounts are stored as floats for transactions and as text for debts, and the payoff math runs in `Decimal`. A rewrite would use integer cents everywhere.
-- There was an early Tkinter dashboard. It was never finished, so it isn't in this copy.
+- Transactions store amounts as floats. Debts store them as text, and the payoff math runs in `Decimal`. I'd use integer cents everywhere in a rewrite.
+- There was an early Tkinter dashboard. I never finished it, so it isn't in this copy.
 
 ## License
 
