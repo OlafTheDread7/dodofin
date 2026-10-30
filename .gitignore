@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Your money data never goes in git: databases and bank exports
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+
+# The generated demo data is rebuilt by make_sample_data.py
+sample/
+
+.env
+.env.*
+
+# Reviewer notes drafted before install
+_gate/
